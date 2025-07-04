@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Captain's Chest",
+    "rarity": "Rare",
+    "location": "Shipwrecks, Skeleton Forts",
+    "price": 560,
+    "company": "Gold Hoarders"
+  },
+  {
+    "name": "Villainous Bounty Skull",
+    "rarity": "Epic",
+    "location": "Forts, Bounty Missions",
+    "price": 950,
+    "company": "Order of Souls"
+  }
+]
