@@ -34,7 +34,7 @@ function showItem(item) {
     <h2>${item.name}</h2>
     <p><strong>Rarity:</strong> ${item.rarity}</p>
     <p><strong>Location:</strong> ${item.location}</p>
-    <p><strong>Price:</strong> ${item.price} gold</p>
+    <p><strong>Sells For:</strong> ${item.price} gold</p>
     <p><strong>Company:</strong> ${item.company}</p>
   `;
   suggestions.innerHTML = '';
