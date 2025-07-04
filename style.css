@@ -1,8 +1,13 @@
 body {
-  font-family: sans-serif;
-  padding: 20px;
   background: #001f2d;
   color: #fff;
+  font-family: sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
+  flex-direction: column;
 }
 
 input {
