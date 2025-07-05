@@ -72,7 +72,7 @@ clearBtn.addEventListener('click', () => {
 function showItem(item) {
   const imageURL = `images/${item.name.toLowerCase().replace(/ /g, '-')}.png`;
 
-  imageContainer.innerHTML = `<img src="${imageURL}" alt="${item.name}" style="width:100%; height: 150px; object-fit: contain;">`;
+  imageContainer.innerHTML = `<img src="${imageURL}" alt="${item.name}" style="max-width: 100%; height: auto; object-fit: contain;">`;
   imageContainer.style.display = 'block';
 
   lootInfo.innerHTML = `
