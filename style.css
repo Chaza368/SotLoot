@@ -16,6 +16,10 @@ body {
   text-align: center; /* center heading + container */
 }
 
+h1 {
+  margin-bottom: 20px; /* space below heading */
+}
+
 #searchContainer {
   position: relative;
   margin-top: 20px;
