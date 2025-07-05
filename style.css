@@ -1,24 +1,26 @@
-/* Full page setup */
 body {
-  font-family: sans-serif;
   background: #001f2d;
   color: #fff;
   margin: 0;
-  padding-top: 40px;
+  padding: 40px 0 0 0; /* top padding to push content down */
   display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: flex-start; /* top of page */
+  justify-content: center;
+  /* Remove align-items here */
   height: 100vh;
+  font-family: sans-serif;
 }
 
-/* Container for search bar and suggestions */
+#wrapper {
+  width: 20%;
+  min-width: 300px; /* optional for small screens */
+  text-align: center; /* center heading + container */
+}
+
 #searchContainer {
-  width: 20%; /* 1/5 of page width */
-  margin-top: 40px;
   position: relative;
+  margin-top: 20px;
 }
 
-/* Search input */
 #searchBar {
   width: 100%;
   padding: 10px;
@@ -28,10 +30,9 @@ body {
   box-sizing: border-box;
 }
 
-/* Suggestion list directly under search bar */
 #suggestions {
   position: absolute;
-  top: 100%; /* directly below search bar */
+  top: 100%;
   left: 0;
   width: 100%;
   background: #003c57;
@@ -55,7 +56,7 @@ body {
 }
 
 @media (max-width: 600px) {
-  #searchContainer {
+  #wrapper {
     width: 80%;
   }
 }
