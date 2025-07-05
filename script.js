@@ -76,7 +76,7 @@ function showItem(item) {
   imageContainer.style.display = 'block';
 
   lootInfo.innerHTML = `
-    <h2>${item.name}</h2>
+    <h2><u>${item.name}</u></h2>
     <p><strong>Rarity:</strong> ${item.rarity}</p>
     <p><strong>Location:</strong> ${item.location}</p>
     <p><strong>Sells For:</strong> ${item["sells for"]} gold</p>
