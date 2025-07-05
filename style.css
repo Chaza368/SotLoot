@@ -83,11 +83,12 @@ h1 {
 
 #imageContainer {
   width: 100%;
-  height: 150px;
-  background: #003c57;
-  border-radius: 5px;
+  height: auto;           /* Let height adjust based on image */
+  background: none;       /* Remove background color */
+  border-radius: 0;       /* Remove rounded corners */
   margin-top: 15px;
-  display: none; /* hide image container initially */
+  display: none;
+  text-align: center;     /* Optional: center the image */
 }
 
 #lootInfo {
