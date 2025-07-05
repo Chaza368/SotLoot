@@ -39,6 +39,13 @@ searchBar.addEventListener('input', () => {
 });
 
 function showItem(item) {
+  // Example placeholder image - replace with your real image URLs keyed by item name or another property
+  const imageURL = `images/${item.name.toLowerCase().replace(/ /g, '-')}.png`; 
+
+  // Show image (fallback to placeholder if image not found)
+  document.getElementById('imageContainer').innerHTML = `<img src="${imageURL}" alt="${item.name}" style="width:100%; height: 150px; object-fit: contain;">`;
+
+  // Show loot info
   lootInfo.innerHTML = `
     <h2>${item.name}</h2>
     <p><strong>Rarity:</strong> ${item.rarity}</p>
