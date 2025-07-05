@@ -3,14 +3,14 @@
     "name": "Captain's Chest",
     "rarity": "Rare",
     "location": "Shipwrecks, Skeleton Forts",
-    "sells for": "560 gold",
+    "sells for": "560,
     "company": "Gold Hoarders"
   },
   {
     "name": "Villainous Bounty Skull",
     "rarity": "Epic",
     "location": "Forts, Bounty Missions",
-    "sells for": "950 gold",
+    "sells for": 950,
     "company": "Order of Souls"
   }
 ]
