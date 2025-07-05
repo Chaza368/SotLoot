@@ -64,3 +64,20 @@ h1 {
     width: 80%;
   }
 }
+
+/* Placeholder for image styling */
+#imageContainer {
+  width: 100%;
+  height: 150px;  /* reserve space for image */
+  background: #003c57; /* temporary background to see it */
+  border-radius: 5px;
+}
+
+/* Loot info styling */
+#lootInfo {
+  width: 100%;
+  background: #004a70;
+  padding: 15px;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
