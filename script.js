@@ -2,13 +2,22 @@ let lootItems = [];
 
 fetch('lootItems.json')
   .then(res => res.json())
-  .then(data => lootItems = data);
+  .then(data => {
+    lootItems = data;
+  })
+  .catch(err => console.error('Error loading lootItems.json:', err));
 
 const searchBar = document.getElementById('searchBar');
 const suggestions = document.getElementById('suggestions');
 const lootInfo = document.getElementById('lootInfo');
 
 searchBar.addEventListener('input', () => {
+  if (lootItems.length === 0) {
+    // Data not loaded yet, don't do search
+    suggestions.innerHTML = '<li>Loading data...</li>';
+    return;
+  }
+
   const query = searchBar.value.toLowerCase();
   suggestions.innerHTML = '';
 
@@ -19,7 +28,7 @@ searchBar.addEventListener('input', () => {
 
   const matches = lootItems.filter(item =>
     item.name.toLowerCase().includes(query)
-  ).slice(0, 10); // limit to 10 suggestions
+  ).slice(0, 10);
 
   matches.forEach(item => {
     const li = document.createElement('li');
