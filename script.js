@@ -13,11 +13,13 @@ const lootInfo = document.getElementById('lootInfo');
 const clearBtn = document.getElementById('clearBtn');
 const imageContainer = document.getElementById('imageContainer');
 
-// Show or hide clear button based on input
 searchBar.addEventListener('input', () => {
   if (lootItems.length === 0) {
     suggestions.innerHTML = '<li>Loading data...</li>';
+    suggestions.style.display = 'block';
     clearBtn.style.display = 'none';
+    imageContainer.style.display = 'none';
+    lootInfo.style.display = 'none';
     return;
   }
 
@@ -27,8 +29,9 @@ searchBar.addEventListener('input', () => {
   clearBtn.style.display = query.length > 0 ? 'inline' : 'none';
 
   if (query.length === 0) {
-    lootInfo.innerHTML = '';
-    imageContainer.innerHTML = '';
+    suggestions.style.display = 'none';
+    lootInfo.style.display = 'none';
+    imageContainer.style.display = 'none';
     return;
   }
 
@@ -36,20 +39,32 @@ searchBar.addEventListener('input', () => {
     item.name.toLowerCase().includes(query)
   ).slice(0, 10);
 
-  matches.forEach(item => {
-    const li = document.createElement('li');
-    li.textContent = item.name;
-    li.addEventListener('click', () => showItem(item));
-    suggestions.appendChild(li);
-  });
+  if (matches.length === 0) {
+    suggestions.innerHTML = '<li>No results found</li>';
+    suggestions.style.display = 'block';
+  } else {
+    matches.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item.name;
+      li.addEventListener('click', () => showItem(item));
+      suggestions.appendChild(li);
+    });
+    suggestions.style.display = 'block';
+  }
+
+  lootInfo.style.display = 'none';
+  imageContainer.style.display = 'none';
 });
 
-// Clear button click event
+// Clear button event
 clearBtn.addEventListener('click', () => {
   searchBar.value = '';
   suggestions.innerHTML = '';
+  suggestions.style.display = 'none';
   lootInfo.innerHTML = '';
+  lootInfo.style.display = 'none';
   imageContainer.innerHTML = '';
+  imageContainer.style.display = 'none';
   clearBtn.style.display = 'none';
   searchBar.focus();
 });
@@ -58,6 +73,7 @@ function showItem(item) {
   const imageURL = `images/${item.name.toLowerCase().replace(/ /g, '-')}.png`;
 
   imageContainer.innerHTML = `<img src="${imageURL}" alt="${item.name}" style="width:100%; height: 150px; object-fit: contain;">`;
+  imageContainer.style.display = 'block';
 
   lootInfo.innerHTML = `
     <h2>${item.name}</h2>
@@ -66,7 +82,11 @@ function showItem(item) {
     <p><strong>Sells For:</strong> ${item["sells for"]} gold</p>
     <p><strong>Company:</strong> ${item.company}</p>
   `;
+  lootInfo.style.display = 'block';
+
   suggestions.innerHTML = '';
+  suggestions.style.display = 'none';
+
   searchBar.value = item.name;
   clearBtn.style.display = 'inline';
 }
