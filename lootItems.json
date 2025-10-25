@@ -1,16 +1,23 @@
 [
   {
     "name": "Captain's Chest",
-    "rarity": "Rare",
+    "rarity": "Common",
     "location": "Shipwrecks, Skeleton Forts",
     "sells for": 560,
     "company": "Gold Hoarders"
   },
   {
     "name": "Villainous Bounty Skull",
-    "rarity": "Epic",
+    "rarity": "Common",
     "location": "Forts, Bounty Missions",
     "sells for": 950,
     "company": "Order of Souls"
+  },
+  {
+    "name": "Skull of Siren's Song",
+    "rarity": "Special",
+    "location": "Skull of Siren's Song Voyage",
+    "sells for": 950,
+    "company": "N/A",
   }
 ]
