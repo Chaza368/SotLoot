@@ -1,17 +1,6 @@
 let lootItems = [];
 let dataLoaded = false;
-
-fetch('lootItems.json')
-  .then(res => res.json())
-  .then(data => {
-    lootItems = data;
-    dataLoaded = true;
-  })
-  .catch(err => {
-    console.error('Error loading lootItems.json:', err);
-    const suggestions = document.getElementById('suggestions');
-    suggestions.innerHTML = '<li style="color: red;">Error loading data</li>';
-  });
+let dataError = false;
 
 const searchBar = document.getElementById('searchBar');
 const suggestions = document.getElementById('suggestions');
@@ -19,51 +8,104 @@ const lootInfo = document.getElementById('lootInfo');
 const clearBtn = document.getElementById('clearBtn');
 const imageContainer = document.getElementById('imageContainer');
 
-// Show or hide clear button + search results
-searchBar.addEventListener('input', () => {
-  const query = searchBar.value.toLowerCase();
-  suggestions.innerHTML = '';
 
-  // Hide info and image if empty input
+// fetch data
+fetch('lootItems.json')
+  .then(res => {
+    if (!res.ok) throw new Error('Network response not ok');
+    return res.json();
+  })
+  .then(data => {
+    lootItems = data;
+    dataLoaded = true;
+  })
+  .catch(err => {
+    console.error('Error loading/parsing lootItems.json:', err);
+    dataError = true;
+    suggestions.innerHTML = '<li style="color: #ff6b6b;">Error loading data</li>';
+    suggestions.style.display = 'block';
+  });
+
+// initial UI state
+clearBtn.style.display = 'none';
+suggestions.style.display = 'none';
+imageContainer.style.display = 'none';
+lootInfo.style.display = 'none';
+
+function showSuggestionsContent(html) {
+  suggestions.innerHTML = html;
+  suggestions.style.display = 'block';
+}
+function hideSuggestions() {
+  suggestions.innerHTML = '';
+  suggestions.style.display = 'none';
+}
+
+searchBar.addEventListener('input', () => {
+  const query = searchBar.value.trim().toLowerCase();
+
+  // hide prior suggestions and info when editing
+  suggestions.innerHTML = '';
+  hideSuggestions();
+
+  // hide image/info if query empty
   if (query.length === 0) {
     lootInfo.innerHTML = '';
+    lootInfo.style.display = 'none';
     imageContainer.innerHTML = '';
+    imageContainer.style.display = 'none';
     clearBtn.style.display = 'none';
     return;
   }
 
+  // show clear button
   clearBtn.style.display = 'inline';
 
-  // If data hasn’t loaded yet, show temporary message
-  if (!dataLoaded) {
-    suggestions.innerHTML = '<li style="color: #aaa;">Loading data...</li>';
+  // if we failed to load data, show error (and return)
+  if (dataError) {
+    showSuggestionsContent('<li style="color: #ff6b6b;">Error loading data</li>');
     return;
   }
 
-  // Normal search
+  // if data not yet loaded, show temporary message (no infinite loop — message is harmless)
+  if (!dataLoaded) {
+    showSuggestionsContent('<li style="color: #aaa;">Loading data...</li>');
+    return;
+  }
+
+  // normal search
   const matches = lootItems
     .filter(item => item.name.toLowerCase().includes(query))
     .slice(0, 10);
 
   if (matches.length === 0) {
-    suggestions.innerHTML = '<li style="color: #aaa;">No results found</li>';
+    showSuggestionsContent('<li style="color: #aaa;">No results found</li>');
     return;
   }
 
+  // show matches
+  suggestions.innerHTML = '';
   matches.forEach(item => {
     const li = document.createElement('li');
     li.textContent = item.name;
+    li.tabIndex = 0;
     li.addEventListener('click', () => showItem(item));
+    li.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') showItem(item);
+    });
     suggestions.appendChild(li);
   });
+  suggestions.style.display = 'block';
 });
 
-// Clear button click event
+// clear button
 clearBtn.addEventListener('click', () => {
   searchBar.value = '';
-  suggestions.innerHTML = '';
+  hideSuggestions();
   lootInfo.innerHTML = '';
+  lootInfo.style.display = 'none';
   imageContainer.innerHTML = '';
+  imageContainer.style.display = 'none';
   clearBtn.style.display = 'none';
   searchBar.focus();
 });
@@ -72,9 +114,9 @@ function showItem(item) {
   const imageURL = `images/${item.name.toLowerCase().replace(/ /g, '-')}.png`;
 
   imageContainer.innerHTML = `
-    <img src="${imageURL}" alt="${item.name}"
-         style="width:100%; height: 150px; object-fit: contain;">
+    <img src="${imageURL}" alt="${item.name}" style="width:100%; max-height:300px; object-fit: contain;">
   `;
+  imageContainer.style.display = 'block';
 
   lootInfo.innerHTML = `
     <h2>${item.name}</h2>
@@ -83,8 +125,9 @@ function showItem(item) {
     <p><strong>Sells For:</strong> ${item["sells for"]} gold</p>
     <p><strong>Company:</strong> ${item.company}</p>
   `;
+  lootInfo.style.display = 'block';
 
-  suggestions.innerHTML = '';
+  hideSuggestions();
   searchBar.value = item.name;
   clearBtn.style.display = 'inline';
 }
